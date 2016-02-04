@@ -8,17 +8,30 @@ using namespace std;
 
 int main()
 {
-	int ch;
+	initscr();
+    start_color();
 
-	initscr();			/* Start curses mode 		*/
-	raw();				/* Line buffering disabled	*/
-	keypad(stdscr, TRUE);		/* We get F1, F2 etc..		*/
-	noecho();			/* Don't echo() while we do getch */
+	char screen[25][80];
+	
+    init_pair(0, COLOR_BLACK, COLOR_RED);
 
-	printw("test",0,0);
+    attron(COLOR_PAIR(0));
 
-	getch();
-	endwin();			/* End curses mode		  */
+	for (int i = 0; i < 25; i++)
+	{
+		for (int j = 0; j < 80; j++)
+		{
+			screen[i][j] = 'A';
+			//move(i,j);
+			//printw(&screen[i][j]);
+		}
+	}
+	
+    refresh();
 
+    getch();
+
+    endwin();
+	
 	return 0;
 }
