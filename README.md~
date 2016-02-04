@@ -19,15 +19,8 @@ To compile and run your code, open a terminal and navigate to the djgpp director
 Once finished, close the dosbox window (type "exit" in dosbox or just close the window).
 
 When your code is ready, upload it back to this repository. To do this, run these commands in a terminal:
-
 >cd djgpp
 
 >git add -A
 
 >git push -u origin testing
-
-To automatically generate a floppy image for use with a virtual machine, run:
-
->cd djgpp
-
->sudo bash ./deploy.sh
