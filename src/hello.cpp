@@ -3,44 +3,49 @@
 
 using namespace std;
 
+/* Helper functions to draw on the screen */
 void print_at(int y, int x);
 void print_vertical_line(int y1, int y2, int x);
 void print_horizontal_line(int x1, int x2, int y);
 void print_diag_315_line(int y1, int y2, int x);
 void print_title_box();
 
+/* Slides are conceptualized as functions */
 void title_slide();
 void features_slide();
 void popular_slide();
 
+/* Keycode for escape in pdcurses is 27 */
 const int KEY_ESCAPE = 27;
 
 int main()
 {
-	initscr();
-	start_color();
-	noecho();
-	keypad(stdscr, TRUE);
-	curs_set(0);
+	initscr(); //init curses
+	start_color(); //enable usage of color
+	noecho(); //don't show typing
+	keypad(stdscr, TRUE); //enable usage of special keys
+	curs_set(0); //turn off blinking cursor
 	
+	/*init text / background color pairs*/
 	init_pair(1, COLOR_BLUE, COLOR_BLUE);	
 	init_pair(2, COLOR_WHITE, COLOR_WHITE);
 	init_pair(3, COLOR_WHITE, COLOR_BLUE);
 	init_pair(4, COLOR_WHITE, COLOR_BLACK);
 	
-	title_slide();
+	title_slide(); //start presentation
 
-	endwin();
+	endwin(); //clean up curses
 	
-	return 0;
+	return 0; //exit
 }
 
 void title_slide()
 {
-	clear();
+	clear(); //clear the screen
 
-	attron(COLOR_PAIR(1));
+	attron(COLOR_PAIR(1)); //use color pair 1
 	
+	/* fill the screen with a blue background */
 	for (int i = 0; i < 25; i++)
 	{
 		for (int j = 0; j < 80; j++)
@@ -50,8 +55,9 @@ void title_slide()
 		}
 	}
 	
-	attron(COLOR_PAIR(2));
+	attron(COLOR_PAIR(2)); //use color pair 2
 	
+	/* Draw ERROR PRONE on the screen */
 	print_vertical_line(9,15,4);
 	print_vertical_line(9,15,11);
 	print_vertical_line(9,15,18);
@@ -112,8 +118,9 @@ void title_slide()
 	print_diag_315_line(13,15,34);
 	print_diag_315_line(13,15,50);
 	
-	attron(COLOR_PAIR(3));
+	attron(COLOR_PAIR(3)); //use color pair 3
 	
+	/* Print our names on the screen */
 	move(17,22);
 	printw("ALLAN MANANGAN");
 	move(20,23);
@@ -123,27 +130,28 @@ void title_slide()
 	move(20,44);
 	printw("JOSEPH CAUTHEN");
 	
-	refresh();
+	refresh(); // update the screen
 	
+	/* test for input */
 	int key;
 	
 	do
 	{
 		key = getch();
 		
-		if (key == KEY_LEFT)
+		if (key == KEY_LEFT) //previous slide
 		{
 			popular_slide();
 			break;
 		}
 		
-		else if (key == KEY_RIGHT)
+		else if (key == KEY_RIGHT) //next slide
 		{
 			features_slide();
 			break;
 		}
 		
-		else if (key == KEY_ESCAPE)
+		else if (key == KEY_ESCAPE) //quit
 		{
 			clear();
 			refresh();
@@ -156,11 +164,12 @@ void features_slide()
 {
 	clear();
 	
-	print_title_box();
-	printw("MS-DOS 3.30 FEATURES");
+	print_title_box(); //prints a box in the upper region of the screen
+	printw("MS-DOS 3.30 FEATURES"); //title
 	
-	attron(COLOR_PAIR(4));
+	attron(COLOR_PAIR(4)); //use color pair 4
 	
+	/* print slide info */
 	move(8,8);
 	printw("* Shipped with IBM PS/2 Computer (rebranded as PC-DOS).");
 	
@@ -178,6 +187,7 @@ void features_slide()
 	
 	refresh();
 	
+	/* check for input */
 	int key;
 	
 	do
@@ -209,11 +219,13 @@ void popular_slide()
 {
 	clear();
 	
+	/* print title */
 	print_title_box();
 	printw("MS-DOS 3.30 REMAINED POPULAR");
 	
-	attron(COLOR_PAIR(4));
+	attron(COLOR_PAIR(4)); //use color pair 4
 	
+	/* print slide info */
 	move(8,8);
 	printw("* MS-DOS 3.31 was only available to OEM manufacturers.");
 	
@@ -229,6 +241,7 @@ void popular_slide()
 	
 	refresh();
 	
+	/* check for input */
 	int key;
 	
 	do
@@ -256,12 +269,14 @@ void popular_slide()
 	} while (key!=KEY_RIGHT && key!=KEY_LEFT);
 }
 
+/* print an empty (background color) block at a location */
 void print_at(int y, int x)
 {
 	move(y,x);
 	printw(" ");
 }
 
+/* print a solid vertical line at a certain location */
 void print_vertical_line(int y1, int y2, int x)
 {
 	for (int y_loc = y1; y_loc <= y2; y_loc++)
@@ -270,6 +285,7 @@ void print_vertical_line(int y1, int y2, int x)
 	}
 }
 
+/*print a solid horizontal line at a certain location */
 void print_horizontal_line(int x1, int x2, int y)
 {
 	for (int x_loc = x1; x_loc <= x2; x_loc++)
@@ -278,7 +294,7 @@ void print_horizontal_line(int x1, int x2, int y)
 	}
 }
 
-	
+/* print a diagonal line at 315* (bottom right) degrees */
 void print_diag_315_line(int y1, int y2, int x)
 {
 	for (int i = 0; i <= y2-y1; i++)
@@ -287,6 +303,7 @@ void print_diag_315_line(int y1, int y2, int x)
 	}
 }
 
+/*print a hollow box for the title on slides*/
 void print_title_box()
 {
 	attron(COLOR_PAIR(2));
