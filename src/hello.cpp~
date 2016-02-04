@@ -3,21 +3,143 @@
 
 using namespace std;
 
-//void title_slide();
-//void
+void print_at(int y, int x);
+void print_vertical_line(int y1, int y2, int x);
+void print_horizontal_line(int x1, int x2, int y);
+void print_diagonal_line(int y1, int x1, int y2, int x2);
+void title_slide();
 
 int main()
 {
-	int ch;
-
-	initscr();			/* Start curses mode 		*/
-	raw();				/* Line buffering disabled	*/
-	keypad(stdscr, TRUE);		/* We get F1, F2 etc..		*/
-	noecho();			/* Don't echo() while we do getch */
-
+	initscr();
+	start_color();
 	
+	title_slide();
+	
+	refresh();
 
-	endwin();			/* End curses mode		  */
+	getch();
 
+	endwin();
+	
 	return 0;
 }
+
+void title_slide()
+{
+	clear();
+
+	init_pair(1, COLOR_BLUE, COLOR_BLUE);
+
+	attron(COLOR_PAIR(1));
+	
+	for (int i = 0; i < 25; i++)
+	{
+		for (int j = 0; j < 80; j++)
+		{
+			move(i,j);
+			printw(" ");
+		}
+	}
+
+	init_pair(2, COLOR_WHITE, COLOR_WHITE);
+	
+	attron(COLOR_PAIR(2));
+	
+	print_vertical_line(9,15,4);
+	print_vertical_line(9,15,11);
+	print_vertical_line(9,15,18);
+	print_vertical_line(9,15,32);
+	print_vertical_line(9,15,42);
+	print_vertical_line(9,15,48);
+	print_vertical_line(9,15,62);
+	print_vertical_line(9,15,66);
+	print_vertical_line(9,15,70);
+	
+	print_vertical_line(9,12,14);
+	print_vertical_line(9,12,21);
+	print_vertical_line(9,12,35);
+	print_vertical_line(9,12,51);
+
+	print_vertical_line(10,14,24);
+	print_vertical_line(10,14,29);
+	print_vertical_line(10,14,54);
+	print_vertical_line(10,14,59);
+	
+	print_vertical_line(10,11,45);
+	print_vertical_line(10,11,63);
+
+	print_vertical_line(12,12,64);
+	print_vertical_line(13,14,65);
+
+	print_horizontal_line(5,8,9);
+	print_horizontal_line(5,8,15);
+
+	print_horizontal_line(5,7,12);
+
+	print_horizontal_line(12,13,9);
+	print_horizontal_line(12,13,12);
+
+	print_horizontal_line(19,20,9);
+	print_horizontal_line(19,20,12);
+
+	print_horizontal_line(25,28,9);
+	print_horizontal_line(25,28,15);
+	print_horizontal_line(33,34,9);
+	print_horizontal_line(33,34,12);
+	
+	print_horizontal_line(43,44,9);
+	print_horizontal_line(43,44,12);
+
+	print_horizontal_line(49,50,9);
+	print_horizontal_line(49,50,12);
+
+	print_horizontal_line(55,58,9);
+	print_horizontal_line(55,58,15);
+
+	print_horizontal_line(71,74,9);
+	print_horizontal_line(71,74,15);
+	print_horizontal_line(71,73,12);
+}
+
+void print_at(int y, int x)
+{
+	move(y,x);
+	printw(" ");
+}
+
+void print_vertical_line(int y1, int y2, int x)
+{
+	for (int y_loc = y1; y_loc <= y2; y_loc++)
+	{
+		print_at(y_loc, x);
+	}
+}
+
+void print_horizontal_line(int x1, int x2, int y)
+{
+	for (int x_loc = x1; x_loc <= x2; x_loc++)
+	{
+		print_at(y, x_loc);
+	}
+}
+
+	
+void print_diagonal_line(int y1, int x1, int y2, int x2)
+{
+	for (int y_loc = y1; y_loc <= y2; y_loc++)
+	{
+		for (int x_loc = x1; x_loc <= x2; x_loc++)
+		{
+			print_at(y_loc, x_loc);
+		}
+	}
+}
+
+
+
+
+
+
+
+
