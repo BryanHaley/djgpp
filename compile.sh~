@@ -1,0 +1,3 @@
+echo "$PWD"
+./bin/i586-pc-msdosdjgpp-g++ -o program.exe -L./lib -I./include ./src/*.cpp -lpdcurses
+dosbox
